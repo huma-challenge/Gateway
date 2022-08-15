@@ -23,14 +23,16 @@ def generate_user_manager_stub() -> acc_grpc.UserManagerStub:
     return grcp_manager.create_new_client(acc_grpc.UserManagerStub)
 
 
-# Create Token for testing in development mode
-request_login = acc_typ.UserLoginRequest()
-request_login.username = "Ali"
-request_login.password = "nova-man"
-token = generate_user_manager_stub().Login(request_login)
+from .authentication import UserTokenAuthentication
+from .permissions import RequestHaveToken
 
 
 class AccountManager(ViewSet):
+    authentication_classes = (UserTokenAuthentication,)
+    permission_classes = [
+        RquestHaveToken,
+    ]
+
     @extend_schema(summary="Fetch All Users")
     def list(self, request):
         client = generate_user_manager_stub()
