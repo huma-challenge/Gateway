@@ -13,8 +13,6 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from gateway.account_manager.grcp_app import get_grcp_manager
-
 # Generate A gRPC manager based on the app
 grcp_manager = get_grcp_manager()
 
@@ -23,8 +21,8 @@ def generate_user_manager_stub() -> acc_grpc.UserManagerStub:
     return grcp_manager.create_new_client(acc_grpc.UserManagerStub)
 
 
-from .authentication import UserTokenAuthentication
-from .permissions import RequestHaveToken
+from gateway.account_manager.authentication import UserTokenAuthentication
+from gateway.account_manager.permissions import RequestHaveToken
 
 
 class AccountManager(ViewSet):
