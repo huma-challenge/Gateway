@@ -127,3 +127,19 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    @action(detail=False, methods=["GET"])
+    def logout(self, request):
+        client = generate_user_manager_stub()
+
+        # Generate RPC Request
+        request_logout = acc_typ.UserLogoutRequest()
+        request_logout.token.CopyFrom(token.token)
+
+        try:
+            result = MessageToDict(client.Logout(request_logout))
+        except:
+            return Response(
+                "Error while logout user", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response("Logout is successfully ", status.HTTP_200_OK)
