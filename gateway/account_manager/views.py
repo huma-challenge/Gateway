@@ -40,3 +40,20 @@ class AccountManager(ViewSet):
         user_list = [MessageToDict(user, True) for user in client.List(request_list)]
 
         return Response(user_list, status.HTTP_200_OK)
+
+    def destroy(self, request, pk):
+        client = generate_user_manager_stub()
+
+        # Generate RPC Request
+        request_destroy = acc_typ.UserDestroyRequest()
+        request_destroy.token.CopyFrom(token.token)
+        request_destroy.user_id = int(pk)
+
+        try:
+            client.Destroy(request_destroy)
+        except:
+            return Response(
+                "Error while removing user", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response("User Removed", status.HTTP_200_OK)
