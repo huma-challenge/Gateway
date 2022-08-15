@@ -41,3 +41,15 @@ class UserProtoSerializer(serializers.Serializer):
         fields = "__all__"
 
 
+class UserLogin(serializers.Serializer):
+    username = serializers.CharField(
+        help_text="Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.",
+        max_length=150,
+    )
+    password = serializers.CharField(max_length=128)
+
+    class Meta:
+        model = None
+        fields = "__all__"
+
+
