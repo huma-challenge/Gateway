@@ -94,3 +94,18 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    def create(self, request):
+        client = generate_user_manager_stub()
+
+        # Generate User Message from input data
+        user_data = request.data
+        user_message = ParseDict(user_data, acc_typ.User())
+
+        try:
+            result = MessageToDict(client.Create(user_message))
+        except:
+            return Response(
+                "Error while creating user", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(result, status.HTTP_200_OK)
