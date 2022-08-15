@@ -108,6 +108,7 @@ class AccountManager(ViewSet):
         # Generate User Message from input data
         user_data = request.data
         user_message = ParseDict(user_data, acc_typ.User())
+        user_message.id = int(pk)
 
         # Generate RPC Request
         request_user_update = acc_typ.UserUpdateRequest()
