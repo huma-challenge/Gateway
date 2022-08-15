@@ -7,6 +7,7 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+# account-manager urls
 urlpatterns += urls.urlpatterns
 
 # Swagger urls
