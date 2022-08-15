@@ -73,7 +73,7 @@ class AccountManager(ViewSet):
 
         # Generate RPC Request
         request_destroy = acc_typ.UserDestroyRequest()
-        request_destroy.token.CopyFrom(token.token)
+        request_destroy.token.CopyFrom(request.token)
         request_destroy.user_id = int(pk)
 
         try:
@@ -92,7 +92,7 @@ class AccountManager(ViewSet):
         # Generate RPC Request
         request_user_retrieve = acc_typ.UserRetrieveRequest()
         request_user_retrieve.user_id = int(pk)
-        request_user_retrieve.token.CopyFrom(token.token)
+        request_user_retrieve.token.CopyFrom(request.token)
 
         try:
             result = MessageToDict(client.Retrieve(request_user_retrieve))
@@ -112,7 +112,7 @@ class AccountManager(ViewSet):
         # Generate RPC Request
         request_user_update = acc_typ.UserUpdateRequest()
         request_user_update.user.CopyFrom(user_message)
-        request_user_update.token.CopyFrom(token.token)
+        request_user_update.token.CopyFrom(request.token)
 
         try:
             result = MessageToDict(client.Update(request_user_update))
@@ -163,7 +163,7 @@ class AccountManager(ViewSet):
 
         # Generate RPC Request
         request_logout = acc_typ.UserLogoutRequest()
-        request_logout.token.CopyFrom(token.token)
+        request_logout.token.CopyFrom(request.token)
 
         try:
             result = MessageToDict(client.Logout(request_logout))
