@@ -37,8 +37,15 @@ class BaseManager(ManagerInterface):
         return manager
 
 
+class Manager(BaseManager):
+    @property
+    def channel(self):
+        return self.grpc_channel
 
+    def create_new_channel(self) -> grpc.Channel:
+        self.grpc_channel = grpc.insecure_channel(self.target)
+        return self.channel
 
-def create_new_client(channel: grpc.Channel, service: grpc):
-    client = service(channel)
-    return client
+    def create_new_client(self, service: grpc):
+        client = service(self.channel)
+        return client
