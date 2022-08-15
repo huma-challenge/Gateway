@@ -53,3 +53,6 @@ class UserLogin(serializers.Serializer):
         fields = "__all__"
 
 
+class UserLoginResponse(serializers.Serializer):
+    token = serializers.CharField(max_length=204)
+    user = UserProtoSerializer()
