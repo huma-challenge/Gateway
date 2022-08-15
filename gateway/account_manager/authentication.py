@@ -29,8 +29,13 @@ class UserTokenAuthentication(TokenAuthentication):
             auth = auth.decode("utf-8")
         else:
             ...
+
+        # if auth not provided does not set token attr to request
+        if not auth:
+            return
+
         token = auth
         user_token = ParseDict({"token": str(token)}, acc_typ.UserToken())
         request.token = user_token
 
-        return (user_token, user_token)
+        return
