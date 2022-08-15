@@ -1,5 +1,12 @@
 from drf_spectacular.utils import extend_schema
 
+from gateway.account_manager.grcp_app import get_grcp_manager
+from gateway.account_manager.serializer import (
+    UserLogin,
+    UserLoginResponse,
+    UserProtoSerializer,
+)
+
 from google.protobuf.json_format import MessageToDict, ParseDict
 
 # These protocol buffers are generated automatically
