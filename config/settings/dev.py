@@ -34,3 +34,5 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
+
+STATIC_ROOT = BASE_DIR / "statics"
