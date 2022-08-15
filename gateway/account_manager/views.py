@@ -57,3 +57,18 @@ class AccountManager(ViewSet):
             )
 
         return Response("User Removed", status.HTTP_200_OK)
+
+    def retrieve(self, request, pk):
+        client = generate_user_manager_stub()
+
+        # Generate RPC Request
+        request_user_retrieve = acc_typ.UserRetrieveRequest()
+        request_user_retrieve.user_id = int(pk)
+        request_user_retrieve.token.CopyFrom(token.token)
+
+        try:
+            result = MessageToDict(client.Retrieve(request_user_retrieve))
+        except:
+            return Response("User does not exist", status.HTTP_404_NOT_FOUND)
+
+        return Response(result, status.HTTP_200_OK)
