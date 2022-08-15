@@ -29,9 +29,18 @@ from .permissions import RequestHaveToken
 
 class AccountManager(ViewSet):
     authentication_classes = (UserTokenAuthentication,)
-    permission_classes = [
-        RquestHaveToken,
-    ]
+    serializer_class = UserProtoSerializer
+
+    def get_permissions(self):
+        permission_classes = ()
+
+        # A list of method that dons't need token in ther reqeust header
+        METHODS_WITHOUT_TOKEN = ["create", "login"]
+
+        if self.action not in METHODS_WITHOUT_TOKEN:
+            permission_classes = (RequestHaveToken,)
+
+        return [permission() for permission in permission_classes]
 
     @extend_schema(summary="Fetch All Users")
     def list(self, request):
