@@ -1,3 +1,5 @@
+from drf_spectacular.utils import extend_schema
+
 from google.protobuf.json_format import MessageToDict, ParseDict
 
 # These protocol buffers are generated automatically
@@ -29,6 +31,7 @@ token = generate_user_manager_stub().Login(request_login)
 
 
 class AccountManager(ViewSet):
+    @extend_schema(summary="Fetch All Users")
     def list(self, request):
         client = generate_user_manager_stub()
 
@@ -41,6 +44,7 @@ class AccountManager(ViewSet):
 
         return Response(user_list, status.HTTP_200_OK)
 
+    @extend_schema(summary="Rmove User By User ID")
     def destroy(self, request, pk):
         client = generate_user_manager_stub()
 
@@ -58,6 +62,7 @@ class AccountManager(ViewSet):
 
         return Response("User Removed", status.HTTP_200_OK)
 
+    @extend_schema(summary="Retrieve User By User ID")
     def retrieve(self, request, pk):
         client = generate_user_manager_stub()
 
@@ -73,6 +78,7 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    @extend_schema(summary="Update User By User ID")
     def update(self, request, pk):
         client = generate_user_manager_stub()
 
@@ -94,6 +100,7 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    @extend_schema(summary="Create New User")
     def create(self, request):
         client = generate_user_manager_stub()
 
