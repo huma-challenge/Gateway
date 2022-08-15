@@ -15,6 +15,8 @@ ALLOWED_HOSTS = str(env("ALLOWED_HOSTS")).strip('"').strip().split()
 
 
 INSTALLED_APPS += [
+    "rest_framework",
     "gateway.account_manager",
 ]
+
 ROOT_URLCONF = "config.urls.dev"
