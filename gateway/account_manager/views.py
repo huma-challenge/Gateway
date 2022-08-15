@@ -109,3 +109,21 @@ class AccountManager(ViewSet):
             )
 
         return Response(result, status.HTTP_200_OK)
+
+    @action(detail=False, methods=["POST"])
+    def login(self, request):
+        client = generate_user_manager_stub()
+
+        # Generate User Message from input data
+        user_data = request.data
+        user_login_message_request = ParseDict(user_data, acc_typ.UserLoginRequest())
+
+        try:
+            result = MessageToDict(client.Login(user_login_message_request))
+        except:
+            return Response(
+                "Error while login user", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(result, status.HTTP_200_OK)
+
