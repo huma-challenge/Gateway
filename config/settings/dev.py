@@ -16,7 +16,21 @@ ALLOWED_HOSTS = str(env("ALLOWED_HOSTS")).strip('"').strip().split()
 
 INSTALLED_APPS += [
     "rest_framework",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
     "gateway.account_manager",
 ]
 
 ROOT_URLCONF = "config.urls.dev"
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Gateway of MicroServices",
+    "DESCRIPTION": "A gateway for micro-services",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
