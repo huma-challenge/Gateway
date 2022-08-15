@@ -25,9 +25,6 @@ class UserTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
         auth = get_authorization_header(request)
 
-        if not auth:
-            msg = "Invalid token header. No credentials provided."
-            raise exceptions.AuthenticationFailed(msg)
         if isinstance(auth, bytes):
             auth = auth.decode("utf-8")
         else:
