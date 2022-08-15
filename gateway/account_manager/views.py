@@ -72,3 +72,25 @@ class AccountManager(ViewSet):
             return Response("User does not exist", status.HTTP_404_NOT_FOUND)
 
         return Response(result, status.HTTP_200_OK)
+
+    def update(self, request, pk):
+        client = generate_user_manager_stub()
+
+        # Generate User Message from input data
+        user_data = request.data
+        user_message = ParseDict(user_data, acc_typ.User())
+
+        # Generate RPC Request
+        request_user_update = acc_typ.UserUpdateRequest()
+        request_user_update.user.CopyFrom(user_message)
+        request_user_update.token.CopyFrom(token.token)
+
+        try:
+            result = MessageToDict(client.Update(request_user_update))
+        except:
+            return Response(
+                "Error while updating user", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        return Response(result, status.HTTP_200_OK)
+
