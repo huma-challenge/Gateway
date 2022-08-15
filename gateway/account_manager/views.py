@@ -140,6 +140,7 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    @extend_schema(summary="login user", request=UserLogin, responses=UserLoginResponse)
     @action(detail=False, methods=["POST"])
     def login(self, request):
         client = generate_user_manager_stub()
@@ -157,6 +158,7 @@ class AccountManager(ViewSet):
 
         return Response(result, status.HTTP_200_OK)
 
+    @extend_schema(summary="logout user", request=None, responses={200: str, 500: str})
     @action(detail=False, methods=["GET"])
     def logout(self, request):
         client = generate_user_manager_stub()
