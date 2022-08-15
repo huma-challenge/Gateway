@@ -53,10 +53,17 @@ class AccountManager(ViewSet):
 
         # Generate RPC Request
         request_list = acc_typ.UserListRequest()
-        request_list.token.CopyFrom(token.token)
+        request_list.token.CopyFrom(request.token)
 
         # fetch all users and convert from message to a list of dict
-        user_list = [MessageToDict(user, True) for user in client.List(request_list)]
+        try:
+            user_list = [
+                MessageToDict(user, True) for user in client.List(request_list)
+            ]
+        except:
+            return Response(
+                "Error while fechting users ", status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
         return Response(user_list, status.HTTP_200_OK)
 
