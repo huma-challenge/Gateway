@@ -49,3 +49,6 @@ class Manager(BaseManager):
     def create_new_client(self, service: grpc):
         client = service(self.channel)
         return client
+
+    def set_interceptor(self, interceptors: list):
+        self.grpc_channel = grpc.intercept_channel(self.channel, *interceptors)

@@ -20,8 +20,15 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
+from gateway.grpc_manager.interceptor import LoggerInterceptor
+
 # Generate A gRPC manager based on the app
 grcp_manager = get_grcp_manager()
+grcp_manager.set_interceptor(
+    [
+        LoggerInterceptor(),
+    ]
+)
 
 # generate client and register on the app channel
 def generate_user_manager_stub() -> acc_grpc.UserManagerStub:
@@ -150,12 +157,12 @@ class AccountManager(ViewSet):
         user_data = request.data
         user_login_message_request = ParseDict(user_data, acc_typ.UserLoginRequest())
 
-        try:
-            result = MessageToDict(client.Login(user_login_message_request))
-        except:
-            return Response(
-                "Error while login user", status.HTTP_500_INTERNAL_SERVER_ERROR
-            )
+        result = MessageToDict(client.Login(user_login_message_request))
+        # try:
+        # except:
+        #     return Response(
+        #         "Error while login user", status.HTTP_500_INTERNAL_SERVER_ERROR
+        #     )
 
         return Response(result, status.HTTP_200_OK)
 
