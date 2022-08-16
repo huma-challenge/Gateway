@@ -8,7 +8,7 @@ WORKDIR /src
 COPY . .
 
 RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r ./requirements/dev.txt
+RUN pip install --no-cache-dir -r /src/requirements/dev.txt
 
 
 EXPOSE 80
